@@ -18,40 +18,100 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Data
 @ToString
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Userid;
+    private int userId;
 
-    private String Name;
+    @Column(name = "username")
+    private String name;
     private String email;
-    private String Password;
-    private String Contact;
-
+    private String password;
+    private String contact;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Role> role;
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
+    // Getters và setters
 
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = role.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_"+role.getRole()))
-                .collect(Collectors.toList());
-        return authorities;
+    public int getUserId() {
+        return userId;
     }
 
-    @Override
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
-        return Password;
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(List<Role> role) {
+        this.role = role;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    // Các override từ UserDetails
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.stream()
+                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getRole()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -78,4 +138,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Column(nullable = false)
+    private boolean enabled = true;
 }

@@ -1,7 +1,5 @@
 package com.organica.payload;
 
-import com.organica.entities.CartDetalis;
-import com.organica.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

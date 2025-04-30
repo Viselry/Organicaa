@@ -8,11 +8,10 @@ export const Hero = () => {
           <div className="hero-content">
             <p className="hero-subtitle">25% off all products.</p>
             <h2 className="h1 hero-title">
-              Qualityful <span className="span">organic</span>
-              fruit &amp; <span className="span">vegetables.</span>
+              Upgrade your <span className="span">technical</span> life with <span className="span">reasonable</span> price
             </h2>
             <p className="hero-text">
-              It has survived not only five centuries also there leaped.
+              We sell laptops, smartphones and more from 20+ providers, with the cheapest price you can find in  the Net.
             </p>
             <a href="/shop" className="btn btn-primary">
               <span className="span">Shop Now</span>

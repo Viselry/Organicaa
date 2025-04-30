@@ -25,7 +25,7 @@ export const Home = () => {
   {/* 
     - #ASIDE
   */}
-  {/* <aside className="aside">
+  { <aside className="aside">
     <div className="side-panel" data-side-panel="whishlist">
       <button
         className="panel-close-btn"
@@ -166,7 +166,7 @@ export const Home = () => {
         View Cart
       </a>
     </div>
-  </aside> */}
+  </aside> }
   <main>
     <article>
       {/* 

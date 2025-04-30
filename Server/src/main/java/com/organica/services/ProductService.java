@@ -1,5 +1,6 @@
 package com.organica.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.organica.payload.ProductDto;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 public interface ProductService {
 
     //create
-    ProductDto CreateProduct(ProductDto productDto);
+    ProductDto CreateProduct(ProductDto productDto) throws JsonProcessingException;
 
     //read
     ProductDto ReadProduct(Integer ProductId);

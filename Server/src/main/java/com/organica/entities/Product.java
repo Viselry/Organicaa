@@ -21,10 +21,15 @@ public class Product {
 
     private String Description;
     private Float Price;
-    private Float Weight;
-    @Column(length = 65555)
-    private byte[] Img;
-
+    private String productBrand;
+    private String imgLink;
+    @ManyToMany
+    @JoinTable(
+            name = "product_category", // tên bảng phụ
+            joinColumns = @JoinColumn(name = "product_id"), // khóa ngoại trỏ đến Product
+            inverseJoinColumns = @JoinColumn(name = "category_id") // khóa ngoại trỏ đến Category
+    )
+    private List<Category> categoryList;
     @OneToMany(mappedBy = "products")
     private List<CartDetalis> list;
 

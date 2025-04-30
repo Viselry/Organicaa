@@ -1,6 +1,8 @@
 package com.organica.services.impl;
 
-import com.organica.config.JwtService;
+
+import com.organica.config.CustomUserDetailsService;
+import com.organica.config.JwtUtils;
 import com.organica.entities.Cart;
 import com.organica.entities.Role;
 import com.organica.entities.TotalRoles;
@@ -11,8 +13,6 @@ import com.organica.repositories.UserRepo;
 import com.organica.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +28,13 @@ public class UserServiceImpl implements UserService {
     private ModelMapper modelMapper;
 
     @Autowired
-    private JwtService jwtService;
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     private UserRepo userRepo;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -52,15 +52,15 @@ public class UserServiceImpl implements UserService {
         cart.setUser(user);
         user.setCart(cart);
 
-        this.userRepo.save(user);
+        this.customUserDetailsService.save(user);
         return this.modelMapper.map(user,UserDto.class);
     }
 
     @Override
     public SingIn SingIn(SingIn singIn) {
-        this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(singIn.getEmail(),singIn.getPassword()));
-        User user=this.userRepo.findByEmail(singIn.getEmail());
-        var jwtToken=jwtService.generateToken(user);
+        System.out.println(singIn);
+        User user= this.userRepo.findByEmail(singIn.getEmail());
+        var jwtToken=jwtUtils.generateTokenFromUsername(user.getName());
         singIn.setJwt(jwtToken);
         return singIn;
     }

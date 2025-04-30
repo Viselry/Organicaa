@@ -1,5 +1,5 @@
 # Base image
-FROM openjdk:17-oracle
+FROM openjdk:21-oracle
 
 # Set working directory
 WORKDIR /app

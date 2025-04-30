@@ -18,19 +18,19 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     public ResponseEntity<UserDto> CreateUser(@RequestBody UserDto userDto){
-
+        System.out.println(userDto);
         UserDto userDto1 = this.userService.CreateUser(userDto);
 
         return new ResponseEntity<>(userDto1, HttpStatusCode.valueOf(200));
     }
 
 
-    @PostMapping("/singin")
+    @PostMapping("/signin")
     public ResponseEntity<SingIn> CreateUser(@RequestBody SingIn singIn){
-
         SingIn singIn1 = this.userService.SingIn(singIn);
+        System.out.println(singIn1);
         return new ResponseEntity<>(singIn1, HttpStatusCode.valueOf(200));
     }
 }
