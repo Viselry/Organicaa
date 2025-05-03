@@ -2,7 +2,8 @@ name: Docker Build and Push
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master   # Đảm bảo bạn đang theo dõi branch master
 
 jobs:
   build-and-push:
