@@ -17,10 +17,12 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'zulu' 
+          distribution: 'zulu'
 
       - name: Build application with Maven
-        run: mvn clean package
+        run: |
+          cd Server
+          ./mvnw clean package -DskipTests
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -34,6 +36,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./Server
+          file: ./Server/Dockerfile
           push: true
           tags: trungdzai/organica:latest
