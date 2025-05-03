@@ -19,6 +19,9 @@ jobs:
           java-version: '11'
           distribution: 'zulu'
 
+      - name: Make mvnw executable
+        run: chmod +x Server/mvnw
+
       - name: Build application with Maven
         run: |
           cd Server
