@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'adoptium' 
+          distribution: 'zulu' 
 
       - name: Build application with Maven
         run: mvn clean package
