@@ -14,7 +14,7 @@
 	<name>organica</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>  <!-- Cập nhật phiên bản Java ở đây -->
+		<java.version>21</java.version>  
 		<main-class>com.organica.OrganicaApplication</main-class>
 	</properties>
 	<repositories>
