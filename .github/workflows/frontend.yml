@@ -1,4 +1,4 @@
-name: Frontend CI
+name: Frontend Build
 
 on:
   push:
@@ -12,17 +12,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Client
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'  # hoặc 20 nếu bạn dùng Node.js mới hơn
 
-      - name: Install dependencies and build
-        run: |
-          cd Client
-          npm install
-          npm run build
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: npm run build
+
+      # Optional: upload artifacts nếu cần deploy tiếp
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: react-build
+          path: Client/build
