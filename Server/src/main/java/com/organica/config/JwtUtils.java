@@ -19,7 +19,15 @@ public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     @Value("${organica.jwtSecret}")
-@@ -30,7 +30,6 @@
+    private String encodedSecret; // base64 encoded
+
+    @Value("${organica.jwtExpirationMs}")
+    private long jwtExpirationMs;
+
+    private SecretKey key() {
+        byte[] decodedKey = Base64.getUrlDecoder().decode(encodedSecret);
+        return Keys.hmacShaKeyFor(decodedKey);
+    }
 
     public String getJwtFromHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
@@ -27,7 +35,9 @@ public class JwtUtils {
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring("Bearer ".length());
         }
-@@ -40,22 +39,20 @@
+        return null;
+    }
+
     public String generateTokenFromUsername(String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
@@ -50,7 +60,8 @@ public class JwtUtils {
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             logger.error("Invalid JWT: {}", e.getMessage());
-@@ -64,10 +61,10 @@
+        }
+        return false;
     }
 
     public String getUserNameFromJwtToken(String token) {
