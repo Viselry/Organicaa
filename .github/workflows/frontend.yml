@@ -35,4 +35,4 @@ jobs:
           context: ./Client
           file: ./Client/Dockerfile
           push: true
-          tags: yourdockerhubusername/organica-frontend:latest
+          tags: trungdzai/organica-frontend:latest
