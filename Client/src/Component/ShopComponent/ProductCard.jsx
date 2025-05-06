@@ -19,11 +19,13 @@ export const ProductCard = (props) => {
       theme: "light",
       });
   }
-  const handalClick = (id) => {
+  const handleClick = (id) => {
     navigate(`/product/${id}`);
   };
 
-  const handalCart = async () => {
+  const handleCart = async () => {
+    console.log(props.id);
+    
     if(sessionStorage.getItem("token")===null){
       navigate("/login");
     }
@@ -34,11 +36,13 @@ export const ProductCard = (props) => {
         "Authorization": "Bearer " + token
       },
       body: JSON.stringify({
-
         productId: props.id,
         quantity: 1,
+        userEmail: sessionStorage.getItem("email")
       }),
     });
+    console.log(res.body);
+    
     if(res.status===200){
       onToast();
       const data = await res.json();
@@ -69,7 +73,7 @@ export const ProductCard = (props) => {
               </button>
               <button
                 className="product-btn"
-                onClick={() => handalClick(props.id)}
+                onClick={() => handleClick(props.id)}
                 aria-label="Quick View"
               >
                 <ion-icon name="eye-outline" />
@@ -93,7 +97,7 @@ export const ProductCard = (props) => {
               Rs {props.price}
             </data>
           </div>
-          <button className="btn btn-primary" onClick={() => handalCart()}>
+          <button className="btn btn-primary" onClick={() => handleCart()}>
             Add to Cart
           </button>
         </div>

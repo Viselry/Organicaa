@@ -12,6 +12,7 @@ export const Cart = () => {
       const [loading, setLoading] = useState(9);
       const [totalAmount, setTotalAmount] = useState(0);
       const[token,setToken]=useState(sessionStorage.getItem("token"));
+      const [isProcessing, setIsProcessing] = useState()
 
 
       const fatchCart = async () => {
@@ -34,68 +35,69 @@ export const Cart = () => {
 
       
 
-      const createOrder = async (e) => {
-        const res = await fetch(`http://localhost:9090/payment/${totalAmount}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-          },
-        });
-        const da = await res.json();
-        setdata(da);
-        return da;
-      }
+      // const createOrder = async (e) => {
+      //   const res = await fetch(`http://localhost:9090/payment/${totalAmount}`, {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //   "Authorization": "Bearer " + token
+      //     },
+      //   });
+      //   const da = await res.json();
+      //   setdata(da);
+      //   return da;
+      // }
 
 
-      const handlePayment = async () => {
-        const order = await createOrder();
-        const options = {
-          key: order.key,
-          amount: order.amount, 
-          currency: order.currency,
-          name: "userName",
-          description: "Test Transaction",
-          image: "https://example.com/your_logo",
-          order_id: order.orderId, 
-          handler: function (response) {
-            console.log(response);
-            alert(response.razorpay_payment_id);
-            alert(response.razorpay_order_id);
-            alert(response.razorpay_signature);
-          },
-          prefill: {
-            name: "vivek",
-            email: "vivek@gmail.com",
-            contact: 7405999619,
-          },
-          notes: {
-            address: "ABC, Delhi",
-          },
-          theme: {
-            color: "#3399cc",
-          },
-        };
+      const handlePurchase = async () => {
+        try {
+            setIsProcessing(true);
+    
+            const userId = Number(sessionStorage.getItem("user_id"));
+    
+            const purchase = {
+                purchaseDate: new Date().toISOString(),
+                userId: userId,
+                purchaseDetails: item.map(cartItem => ({
+                    productId: cartItem.products.productId,
+                    quantity: cartItem.quantity
+                }))
+            };
+    
+            console.log("Sending purchase DTO:", purchase);
+    
+            const purchaseResponse = await fetch("http://localhost:9090/purchase/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify(purchase)
+            });
+    
+            if (!purchaseResponse.ok) {
+                throw new Error("Failed to create purchase");
+            }
+    
+            const createdPurchase = await purchaseResponse.json();
+            console.log("Created purchase:", createdPurchase);
+    
+            // Reset cart
+            setItem([]);
+            setTotalAmount(0);
+            alert("Your order has been placed successfully!");
+        } catch (error) {
+            console.error("Error creating purchase:", error);
+            alert("There was an error processing your order. Please try again.");
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+    
+    
       
-        const rzp1 = new window.Razorpay(options);;
-        rzp1.on("payment.failed", function (response) {
-          alert(response.error.code);
-          alert(response.error.description);
-          alert(response.error.source);
-          alert(response.error.step);
-          alert(response.error.reason);
-          alert(response.error.metadata.order_id);
-          alert(response.error.metadata.payment_id);
-        });
       
-        rzp1.open();
-      };
      
-
-
-
-
-
   return (
     <>
       <Header />
@@ -179,7 +181,7 @@ export const Cart = () => {
                     <button
                       href=""
                       className="btn btn-dark rounded-pill py-2 btn-block"
-                      onClick={(e) => handlePayment(e)}
+                      onClick={(e) => handlePurchase(e)}
                     >
                       Procceed to checkout
                     </button>

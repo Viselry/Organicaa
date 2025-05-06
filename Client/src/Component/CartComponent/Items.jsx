@@ -6,7 +6,6 @@ import axiosFetch from "../../Helper/Axios";
 export const Items = ({ prop ,setLoading}) => {
   const [quantity, setQuantity] = useState(prop.quantity);
   const[token,setToken]=useState(sessionStorage.getItem("token"));
-  
   const [item2, setItem2] = useState(prop.products);
 
   const onToast = () => {

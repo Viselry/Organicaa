@@ -1,39 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
-import * as Scroll from 'react-scroll';
+import CategoryListPopup from "./HeaderComponent/CategoryListPopup";
+import * as Scroll from "react-scroll";
 
 // Or Access Link,Element,etc as follows
 let Link = Scroll.Link;
 
-
-
 export const Header = () => {
-  
+  const [showCategoryPopup, setShowCategoryPopup] = useState(false);
+
+  // Ref để xử lý sự kiện mouseEnter và mouseLeave tốt hơn
+  const categoryRef = useRef(null);
+
+  // Xử lý khi hover vào mục "Category"
+  const handleCategoryMouseEnter = () => {
+    setShowCategoryPopup(true);
+  };
+
+  // Xử lý khi rời khỏi mục "Category"
+  const handleCategoryMouseLeave = () => {
+    setShowCategoryPopup(false);
+  };
 
   const [islogin, setislogin] = useState(sessionStorage.getItem("token"));
-  
+
   const navigate = useNavigate();
   const handalRedirect = () => {
     if (islogin) {
       navigate(`/cart`);
-   
     } else {
       navigate(`/login`);
-
     }
   };
 
   const handalLogout = () => {
     sessionStorage.removeItem("token");
-    setislogin(false)
+    setislogin(false);
     navigate(`/`);
   };
-
-  
-
-    
-
 
   return (
     <header className="header" data-header="">
@@ -97,17 +101,23 @@ export const Header = () => {
                   Blog
                 </Link>
               </li>
-              <li>
+              <li
+                ref={categoryRef}
+                onMouseEnter={handleCategoryMouseEnter}
+                onMouseLeave={handleCategoryMouseLeave}
+                className="relative"
+              >
                 <Link
                   activeClass="active"
-                  className="navbar-link"
+                  className="navbar-link cursor-pointer"
                   smooth="linear"
                   spy
                   to="products"
                   offset={-30}
                 >
-                  Products
+                  Category
                 </Link>
+                <CategoryListPopup isVisible={showCategoryPopup} />
               </li>
               <li>
                 <Link
@@ -183,16 +193,19 @@ export const Header = () => {
                   </data>
                 </button>
               </>
-              
             )}
-           {islogin ? <button
-                  className="header-action-btn"
-                  aria-label="Open shopping cart"
-                  data-panel-btn="cart"
-                  onClick={() => handalLogout()}
-                >
-                 <ion-icon name="log-out-outline"></ion-icon>
-                </button>:<></>}
+            {islogin ? (
+              <button
+                className="header-action-btn"
+                aria-label="Open shopping cart"
+                data-panel-btn="cart"
+                onClick={() => handalLogout()}
+              >
+                <ion-icon name="log-out-outline"></ion-icon>
+              </button>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

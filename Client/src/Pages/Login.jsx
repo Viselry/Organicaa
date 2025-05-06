@@ -41,7 +41,7 @@ export const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:9090/auth/singin", {
+    const res = await fetch("http://localhost:9090/auth/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,6 +53,8 @@ export const Login = () => {
     
     const data = await res.json();
     sessionStorage.setItem("token", data.jwt);
+    sessionStorage.setItem("email", data.email);
+    sessionStorage.setItem("user_id", data.userId)
     if(res.status===200){
       onToast('Login Successfull!!');
       window.location.href = "/";

@@ -21,4 +21,17 @@ const axiosFetch = async ({ url, method, data = null }) => {
   }
 };
 
-export default axiosFetch;
+const insecureAxiosFetch = async ({ url, method, data = null }) => {
+  try {
+    const response = await axios.request({
+      url: "http://localhost:9090/" + url,
+      method,
+      data,
+    });
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export {axiosFetch, insecureAxiosFetch};
