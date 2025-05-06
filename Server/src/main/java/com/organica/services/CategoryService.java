@@ -1,6 +1,7 @@
 package com.organica.services;
 
 import com.organica.payload.CategoryDto;
+import com.organica.payload.ProductDto;
 
 import java.util.List;
 
@@ -10,4 +11,8 @@ public interface CategoryService {
     void deleteCategory(Integer categoryId);
     CategoryDto getCategoryById(Integer categoryId);
     List<CategoryDto> getAllCategories();
+    List<ProductDto> getProductsByCategoryId(Long CategoryId);
+    List<ProductDto> getProductsByCategoryIdWithLimit(Long CategoryId, Integer limit);
+
+    List<CategoryDto> getCategoryWithLimit(Integer limit);
 }

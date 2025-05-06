@@ -27,9 +27,7 @@ public class CartController {
 
 
     @PostMapping("/addproduct")
-    public ResponseEntity<CartDto> addProduct(@RequestBody CartHelp cartHelp,Principal principal){
-        String userEmail = principal.getName();
-        cartHelp.setUserEmail(userEmail);
+    public ResponseEntity<CartDto> addProduct(@RequestBody CartHelp cartHelp){
         CartDto cartDto = this.cartService.addProductToCart(cartHelp);
         return new ResponseEntity<>(cartDto, HttpStatusCode.valueOf(200));
     }
@@ -44,7 +42,7 @@ public class CartController {
 
 
     @DeleteMapping("/product/{productid}")
-    public ResponseEntity<ApiResponse> DeleteItem(Principal principal, @PathVariable Integer productid){
+    public ResponseEntity<ApiResponse> DeleteItem(Principal principal, @PathVariable Long productid){
         String userEmail = principal.getName();
         this.cartService.RemoveById(productid,userEmail);
 

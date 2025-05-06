@@ -40,6 +40,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
+    @OneToMany(mappedBy = "user")
+    private List<Purchase> purchases;
+
     // Getters và setters
 
     public int getUserId() {

@@ -2,6 +2,7 @@ package com.organica.controllers;
 
 import com.organica.payload.ApiResponse;
 import com.organica.payload.CategoryDto;
+import com.organica.payload.ProductDto;
 import com.organica.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class CategoryController {
 
     // Update Category
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{categoryId}")
+    @PutMapping("/update/{categoryId}")
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable Integer categoryId) {
         CategoryDto updatedCategory = categoryService.updateCategory(categoryDto, categoryId);
         return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
@@ -44,16 +45,39 @@ public class CategoryController {
     }
 
     // Get Single Category
-    @GetMapping("/{categoryId}")
+    @GetMapping("/get/{categoryId}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable Integer categoryId) {
         CategoryDto categoryDto = categoryService.getCategoryById(categoryId);
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
 
     // Get All Categories
-    @GetMapping("/")
-    public ResponseEntity<List<CategoryDto>> getAllCategories() {
-        List<CategoryDto> categories = categoryService.getAllCategories();
+    @GetMapping("/get")
+    public ResponseEntity<List<CategoryDto>> getAllCategories(@RequestParam(required = false) Integer limit) {
+        List<CategoryDto> categories;
+        if (limit != null) {
+            categories = categoryService.getCategoryWithLimit(limit);
+        }
+        else {
+             categories = categoryService.getAllCategories();
+        }
+
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
+
+    @GetMapping("/get/products/{categoryId}")
+    public ResponseEntity<List<ProductDto>> getProductsByCategoryId(
+            @PathVariable Long categoryId,
+            @RequestParam(required = false) Integer limit) {
+
+        List<ProductDto> productDtos;
+        if (limit != null) {
+            productDtos = categoryService.getProductsByCategoryIdWithLimit(categoryId, limit);
+        } else {
+            productDtos = categoryService.getProductsByCategoryId(categoryId);
+        }
+
+        return new ResponseEntity<>(productDtos, HttpStatus.OK);
+    }
+
 }

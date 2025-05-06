@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
         User user= this.userRepo.findByEmail(singIn.getEmail());
         var jwtToken=jwtUtils.generateTokenFromUsername(user.getName());
         singIn.setJwt(jwtToken);
+        singIn.setUserId(user.getUserId());
         return singIn;
     }
 }

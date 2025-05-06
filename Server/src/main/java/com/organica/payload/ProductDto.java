@@ -12,7 +12,7 @@ import java.util.ArrayList;
 @Data
 @ToString
 public class ProductDto {
-    private int productId;
+    private long productId;
     private String ProductName;
     private String brandName;
     private String Description;

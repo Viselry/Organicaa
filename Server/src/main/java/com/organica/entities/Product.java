@@ -15,12 +15,12 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ProductId;
+    private long productId;
     @Column
-    private String ProductName;
+    private String productName;
 
-    private String Description;
-    private Float Price;
+    private String description;
+    private Float price;
     private String productBrand;
     private String imgLink;
     @ManyToMany
@@ -32,5 +32,7 @@ public class Product {
     private List<Category> categoryList;
     @OneToMany(mappedBy = "products")
     private List<CartDetalis> list;
+    @OneToMany(mappedBy = "product")
+    private List<PurchaseDetails> purchaseDetails; ;
 
 }

@@ -3,6 +3,7 @@ package com.organica.services.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.organica.entities.Product;
+import com.organica.payload.PagedResponseDTO;
 import com.organica.payload.ProductDto;
 import com.organica.produce.KafkaProducerService;
 import com.organica.repositories.ProductRepo;
@@ -12,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -53,33 +54,40 @@ public class ProductServiceImpl implements ProductService {
     // Read One
     @Override
     @Cacheable(value = "PRODUCT_CACHE", key = "#productId")
-    public ProductDto ReadProduct(Integer productId) {
+    public ProductDto ReadProduct(Long productId) {
         Product product = this.productRepo.findById(productId).orElseThrow();
         return this.modelMapper.map(product, ProductDto.class);
     }
 
     // Read All
     @Override
-    @Cacheable(value = "PRODUCT_CACHE", key = "'all'")
-    public List<ProductDto> ReadAllProduct() {
-        List<Product> allProducts = this.productRepo.findAll();
-        return allProducts.stream()
-                .map(product -> this.modelMapper.map(product, ProductDto.class))
-                .collect(Collectors.toList());
+    @Cacheable(value = "PRODUCT_CACHE", key = "'page_' + #page + '_size_' + #size")
+    public PagedResponseDTO<ProductDto> getAllProductsPaged(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("productId").descending());
+        Page<Product> productPage = productRepo.findAll(pageable);
+
+        List<ProductDto> dtoList = productPage.getContent().stream()
+                .map(p -> modelMapper.map(p, ProductDto.class))
+                .toList();
+
+        Page<ProductDto> dtoPage = new PageImpl<>(dtoList, pageable, productPage.getTotalElements());
+        return new PagedResponseDTO<>(dtoPage); // an toàn vì đã chuẩn hóa bằng constructor như trên
     }
+
+
 
     // Delete
     @Override
     @CacheEvict(value = "PRODUCT_CACHE", key = "#productId")
-    public void DeleteProduct(Integer productId) {
+    public void DeleteProduct(Long productId) {
         this.productRepo.deleteById(productId);
     }
 
     // Update
     @Override
     @CachePut(value = "PRODUCT_CACHE", key = "#result.productId")
-    public ProductDto UpdateProduct(ProductDto productDto, Integer productId) {
-        Product existingProduct = this.productRepo.findById(productId).orElseThrow();
+    public ProductDto UpdateProduct(ProductDto productDto, Long ProductId) {
+        Product existingProduct = this.productRepo.findById(ProductId).orElseThrow();
 
         existingProduct.setProductName(productDto.getProductName());
         existingProduct.setDescription(productDto.getDescription());

@@ -44,7 +44,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto addProductToCart(CartHelp cartHelp) {
 
-        int productId = cartHelp.getProductId();
+        long productId = cartHelp.getProductId();
         int quantity = cartHelp.getQuantity();
         String userEmail = cartHelp.getUserEmail();
         AtomicReference<Integer> totalAmount = new AtomicReference<>(0);
@@ -132,7 +132,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void RemoveById(Integer productId, String userEmail) {
+    public void RemoveById(Long productId, String userEmail) {
         User user = this.userRepo.findByEmail(userEmail);
         Product product = this.productRepo.findById(productId).orElseThrow();
         Cart cart = this.cartRepo.findByUser(user);

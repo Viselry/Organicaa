@@ -18,7 +18,7 @@ public interface CartService {
 
     //delete product
 
-    void RemoveById(Integer ProductId,String userEmail);
+    void RemoveById(Long ProductId,String userEmail);
 
     //delete
 

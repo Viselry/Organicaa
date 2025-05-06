@@ -3,10 +3,12 @@ package com.organica.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.organica.entities.Category;
 import com.organica.payload.ApiResponse;
+import com.organica.payload.PagedResponseDTO;
 import com.organica.payload.ProductDto;
 import com.organica.services.CategoryService;
 import com.organica.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,21 +36,25 @@ public class ProductControllers {
 
     // Get by Id
     @GetMapping("/{productid}")
-    public ResponseEntity<ProductDto> GetById(@PathVariable Integer productid) {
-        ProductDto product = this.productService.ReadProduct(productid);
+    public ResponseEntity<ProductDto> GetById(@PathVariable Long ProductId) {
+        ProductDto product = this.productService.ReadProduct(ProductId);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     // Get All Products
     @GetMapping("/")
-    public ResponseEntity<List<ProductDto>> getAll() {
-        List<ProductDto> products = this.productService.ReadAllProduct();
+    public ResponseEntity<PagedResponseDTO<ProductDto>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size
+    ) {
+        PagedResponseDTO<ProductDto> products = productService.getAllProductsPaged(page, size);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+
     // Delete Product
     @DeleteMapping("/del/{ProductId}")
-    public ResponseEntity<ApiResponse> Delete(@PathVariable Integer ProductId) {
+    public ResponseEntity<ApiResponse> Delete(@PathVariable Long ProductId) {
         this.productService.DeleteProduct(ProductId);
         return new ResponseEntity<>(new ApiResponse("Product deleted"), HttpStatus.OK);
     }
@@ -57,7 +63,7 @@ public class ProductControllers {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{ProductId}")
     public ResponseEntity<ProductDto> UpdateProduct(@RequestBody ProductDto productDto,
-                                                    @PathVariable Integer ProductId) {
+                                                    @PathVariable Long ProductId) {
         ProductDto updatedProduct = this.productService.UpdateProduct(productDto, ProductId);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }

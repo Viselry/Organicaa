@@ -21,7 +21,7 @@ public class CartDetailsServiceImpl implements CartDetailsService{
 
     @Override
     public CartDetailDto addProduct(CartHelp cartHelp) {
-        int productId=cartHelp.getProductId();
+        long productId=cartHelp.getProductId();
         int quantity= cartHelp.getQuantity();
         String userEmail= cartHelp.getUserEmail();
 

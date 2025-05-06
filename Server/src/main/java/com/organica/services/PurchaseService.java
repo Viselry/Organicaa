@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface PurchaseService {
-    public void save(Purchase purchase);
+    public Purchase save(Purchase purchase);
 }

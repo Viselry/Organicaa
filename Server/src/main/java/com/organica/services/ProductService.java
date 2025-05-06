@@ -1,7 +1,9 @@
 package com.organica.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.organica.payload.PagedResponseDTO;
 import com.organica.payload.ProductDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,19 +13,19 @@ public interface ProductService {
     ProductDto CreateProduct(ProductDto productDto) throws JsonProcessingException;
 
     //read
-    ProductDto ReadProduct(Integer ProductId);
+    ProductDto ReadProduct(Long ProductId);
 
 
     //readAll
-    List<ProductDto> ReadAllProduct();
+    PagedResponseDTO<ProductDto> getAllProductsPaged(int page, int size);
 
 
     //delete
-    void DeleteProduct(Integer productId);
+    void DeleteProduct(Long productId);
 
 
     //update
-    ProductDto UpdateProduct(ProductDto productDto,Integer ProductId);
+    ProductDto UpdateProduct(ProductDto productDto,Long ProductId);
 
 
 
