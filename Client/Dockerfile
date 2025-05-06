@@ -1,23 +1,13 @@
-# Base image
-FROM node:16-alpine
-
-# Set working directory
+# Build stage
+FROM node:18-alpine as build
 WORKDIR /app
-
-# Copy package.json and package-lock.json
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
-
-# Copy project files
 COPY . .
-
-# Build the React app
 RUN npm run build
 
-# Expose port 3000
-EXPOSE 3000:3000
-
-# Start the React app
-CMD ["npm", "start"]
+# Serve stage
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
