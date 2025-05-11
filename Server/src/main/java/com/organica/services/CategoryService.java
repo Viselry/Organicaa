@@ -13,6 +13,5 @@ public interface CategoryService {
     List<CategoryDto> getAllCategories();
     List<ProductDto> getProductsByCategoryId(Long CategoryId);
     List<ProductDto> getProductsByCategoryIdWithLimit(Long CategoryId, Integer limit);
-
     List<CategoryDto> getCategoryWithLimit(Integer limit);
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
 import { insecureAxiosFetch } from "../../Helper/Axios";
 
 const CategoryListPopup = ({ isVisible }) => {
@@ -8,7 +8,6 @@ const CategoryListPopup = ({ isVisible }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Chỉ gọi API khi component được hiển thị
     if (isVisible) {
       fetchCategories();
     }
@@ -17,7 +16,6 @@ const CategoryListPopup = ({ isVisible }) => {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      // Sử dụng insecureAxiosFetch để gọi API
       const response = await insecureAxiosFetch({
         url: "categories/get?limit=20",
         method: "GET",
@@ -37,7 +35,6 @@ const CategoryListPopup = ({ isVisible }) => {
     }
   };
 
-  // Nếu không visible thì không render gì cả
   if (!isVisible) return null;
 
   return (
@@ -47,29 +44,25 @@ const CategoryListPopup = ({ isVisible }) => {
           <h3 className="mt-0 mb-4 text-gray-800 text-lg font-medium border-b border-gray-100 pb-2">
             Danh mục sản phẩm
           </h3>
-          
+
           {loading && <p className="text-gray-600">Đang tải...</p>}
-          
           {error && <p className="text-red-500">{error}</p>}
-          
+
           {!loading && !error && (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {categories.map((category) => (
-                <div key={category.id}>
-                  <Link
-                    to="products"
-                    smooth="linear"
-                    spy
-                    offset={-30}
-                    className="text-gray-700 no-underline block transition-colors hover:text-blue-500 cursor-pointer"
-                    onClick={() =>
-                      console.log(`Selected category: ${category.categoryName}`)
-                    }
-                  >
-                    {category.categoryName}
-                  </Link>
-                </div>
-              ))}
+              {categories.map((category) => {
+                console.log(category);
+                return(
+                  <div key={category.id}>
+                    <Link
+                      to={`/category/${category.id}`}
+                      className="text-gray-700 no-underline block transition-colors hover:text-blue-500"
+                    >
+                      {category.categoryName}
+                    </Link>
+                  </div>
+                )
+              })}
             </div>
           )}
         </div>

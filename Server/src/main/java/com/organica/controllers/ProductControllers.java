@@ -35,9 +35,9 @@ public class ProductControllers {
     }
 
     // Get by Id
-    @GetMapping("/{productid}")
-    public ResponseEntity<ProductDto> GetById(@PathVariable Long ProductId) {
-        ProductDto product = this.productService.ReadProduct(ProductId);
+    @GetMapping("/details/{productid}")
+    public ResponseEntity<ProductDto> GetById(@PathVariable Long productid) {
+        ProductDto product = this.productService.ReadProduct(productid);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 

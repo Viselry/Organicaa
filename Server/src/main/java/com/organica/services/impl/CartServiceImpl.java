@@ -49,10 +49,12 @@ public class CartServiceImpl implements CartService {
         String userEmail = cartHelp.getUserEmail();
         AtomicReference<Integer> totalAmount = new AtomicReference<>(0);
 
-        User user = this.userRepo.findByEmail(userEmail);
-        Product product = this.productRepo.findById(productId).orElseThrow();
+        User user = this.userRepo.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + userEmail));
 
-        // create cart detail
+        Product product = this.productRepo.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
+
         CartDetalis cartDetalis = new CartDetalis();
         cartDetalis.setProducts(product);
         cartDetalis.setQuantity(quantity);
@@ -69,10 +71,7 @@ public class CartServiceImpl implements CartService {
             cartDetalis1.setProducts(product);
             cartDetalis1.setAmount((int) (product.getPrice() * quantity));
 
-            List<CartDetalis> pro = newCart.getCartDetalis();
-            if (pro == null) {
-                pro = new java.util.ArrayList<>();
-            }
+            List<CartDetalis> pro = new java.util.ArrayList<>();
             pro.add(cartDetalis1);
 
             newCart.setCartDetalis(pro);
@@ -80,9 +79,7 @@ public class CartServiceImpl implements CartService {
             cartDetalis1.setCart(newCart);
 
             Cart savedCart = this.cartRepo.save(newCart);
-
-            CartDto map = this.modelMapper.map(savedCart, CartDto.class);
-            return map;
+            return this.modelMapper.map(savedCart, CartDto.class);
         }
 
         cartDetalis.setCart(cart);
@@ -117,26 +114,27 @@ public class CartServiceImpl implements CartService {
         cart.setTotalAmount(totalAmount.get());
 
         Cart savedCart = this.cartRepo.save(cart);
-
-        CartDto map = this.modelMapper.map(savedCart, CartDto.class);
-        return map;
+        return this.modelMapper.map(savedCart, CartDto.class);
     }
 
     @Override
     public CartDto GetCart(String userEmail) {
-        User user = this.userRepo.findByEmail(userEmail);
-        Cart cart = this.cartRepo.findByUser(user);
+        User user = this.userRepo.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + userEmail));
 
-        CartDto map = this.modelMapper.map(cart, CartDto.class);
-        return map;
+        Cart cart = this.cartRepo.findByUser(user);
+        return this.modelMapper.map(cart, CartDto.class);
     }
 
     @Override
     public void RemoveById(Long productId, String userEmail) {
-        User user = this.userRepo.findByEmail(userEmail);
-        Product product = this.productRepo.findById(productId).orElseThrow();
-        Cart cart = this.cartRepo.findByUser(user);
+        User user = this.userRepo.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + userEmail));
 
+        Product product = this.productRepo.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
+
+        Cart cart = this.cartRepo.findByUser(user);
         CartDetalis cartDetail = this.cartDetailsRepo.findByProductsAndCart(product, cart);
         int amount = cartDetail.getAmount();
 

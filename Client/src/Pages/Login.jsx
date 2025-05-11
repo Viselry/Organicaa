@@ -104,13 +104,13 @@ export const Login = () => {
       <a
         className="d-flex flex-row align-items-center social-login-link"
         style={{ marginBottom: 10 }}
-        href="#"
+        href="http://localhost:9090/oauth2/authorization/google"
       >
         <i
           className="fa fa-google"
           style={{ color: "rgb(255,255,255)", width: 56 }}
         />
-        Login with Google+
+        Login with Google
       </a>
     </div>
   </div>

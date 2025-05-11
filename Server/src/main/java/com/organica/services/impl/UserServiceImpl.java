@@ -13,6 +13,7 @@ import com.organica.repositories.UserRepo;
 import com.organica.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,12 +58,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SingIn SingIn(SingIn singIn) {
+    public SingIn singIn(SingIn singIn) {
         System.out.println(singIn);
-        User user= this.userRepo.findByEmail(singIn.getEmail());
-        var jwtToken=jwtUtils.generateTokenFromUsername(user.getName());
+
+        User user = this.userRepo.findByEmail(singIn.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + singIn.getEmail()));
+
+        String jwtToken = jwtUtils.generateTokenFromUsername(user.getName());
+
         singIn.setJwt(jwtToken);
         singIn.setUserId(user.getUserId());
         return singIn;
     }
+
 }

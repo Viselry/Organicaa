@@ -17,7 +17,6 @@ import java.util.List;
 @CrossOrigin
 @RequiredArgsConstructor
 public class CategoryController {
-
     private final CategoryService categoryService;
 
     // Create Category
@@ -79,5 +78,4 @@ public class CategoryController {
 
         return new ResponseEntity<>(productDtos, HttpStatus.OK);
     }
-
 }

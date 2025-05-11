@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping("/signin")
     public ResponseEntity<SingIn> CreateUser(@RequestBody SingIn singIn){
-        SingIn singIn1 = this.userService.SingIn(singIn);
+        SingIn singIn1 = this.userService.singIn(singIn);
         System.out.println(singIn1);
         return new ResponseEntity<>(singIn1, HttpStatusCode.valueOf(200));
     }

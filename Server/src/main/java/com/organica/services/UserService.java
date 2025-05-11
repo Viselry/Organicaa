@@ -8,5 +8,5 @@ public interface UserService {
 
     UserDto CreateUser(UserDto userDto);
 
-    SingIn SingIn(SingIn singIn);
+    SingIn singIn(SingIn singIn);
 }
