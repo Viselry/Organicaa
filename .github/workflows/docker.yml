@@ -21,13 +21,11 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Grant execute permission for Maven wrapper
-        run: chmod +x mvnw
+      - name: Build JAR file with Maven Wrapper
         working-directory: ./Server
-
-      - name: Build JAR file with Maven
-        run: ./mvnw clean package -DskipTests
-        working-directory: ./Server
+        run: |
+          chmod +x mvnw
+          ./mvnw clean package -DskipTests
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
