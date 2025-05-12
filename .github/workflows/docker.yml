@@ -22,9 +22,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Build JAR file with Maven Wrapper
-        working-directory: ./Server
         run: |
-          chmod +x mvnw
+          cd Server
+          chmod +x ./mvnw
           ./mvnw clean package -DskipTests
 
       - name: Authenticate to Google Cloud
