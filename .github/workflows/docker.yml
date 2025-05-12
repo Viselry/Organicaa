@@ -21,9 +21,10 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build JAR file with Maven
+      - name: Build JAR file with Maven Wrapper
         run: |
           cd Server
+          chmod +x mvnw
           ./mvnw clean package -DskipTests
 
       - name: Authenticate to Google Cloud
