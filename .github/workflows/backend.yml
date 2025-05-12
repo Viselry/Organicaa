@@ -24,10 +24,14 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build with Maven
+      - name: Check Java version
+        run: java -version
+
+      - name: Build with Maven Wrapper
         run: |
           cd Server
-          mvn clean install
+          chmod +x ./mvnw
+          ./mvnw clean package -DskipTests
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
