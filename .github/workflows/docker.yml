@@ -23,9 +23,8 @@ jobs:
 
       - name: Build JAR file with Maven Wrapper
         run: |
-          cd Server
-          chmod +x mvnw
-          ./mvnw clean package -DskipTests
+          chmod +x ./Server/mvnw
+          ./Server/mvnw clean package -DskipTests
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
