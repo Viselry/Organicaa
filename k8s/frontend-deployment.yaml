@@ -17,3 +17,10 @@ spec:
           image: asia-southeast2-docker.pkg.dev/sapient-duality-456306-u2/frontend/frontend:latest
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
