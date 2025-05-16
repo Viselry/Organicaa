@@ -161,11 +161,12 @@ services:
       context: ./Client
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 3000:80
     depends_on:
       - backend
     networks:
       - kafka-net
+
 
 volumes:
   pgadmin_data:
