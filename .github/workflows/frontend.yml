@@ -38,5 +38,3 @@ jobs:
           tags: |
             asia-southeast1-docker.pkg.dev/notely-459605/frontend-repo/frontend:latest
             asia-southeast1-docker.pkg.dev/notely-459605/frontend-repo/frontend:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
