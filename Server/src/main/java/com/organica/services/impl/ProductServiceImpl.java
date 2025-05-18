@@ -1,11 +1,9 @@
 package com.organica.services.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.organica.entities.Product;
 import com.organica.payload.PagedResponseDTO;
 import com.organica.payload.ProductDto;
-import com.organica.produce.KafkaProducerService;
 import com.organica.repositories.ProductRepo;
 import com.organica.services.ProductService;
 import org.modelmapper.ModelMapper;
@@ -16,7 +14,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,8 +24,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepo productRepo;
-    @Autowired
-    private KafkaProducerService kafkaProducerService;
 
     // Create
     @CachePut(value = "PRODUCT_CACHE", key = "#result.productId")
@@ -38,19 +33,9 @@ public class ProductServiceImpl implements ProductService {
         // Không còn compress img nữa
         Product savedProduct = this.productRepo.save(product);
 
-        ProductDto savedProductDto = this.modelMapper.map(savedProduct, ProductDto.class);
-
-        // Create message content with product info and current timestamp
-        LocalDateTime currentTime = LocalDateTime.now();
-        String messageContent = String.format("{\"product\":%s,\"timestamp\":\"%s\"}",
-                new ObjectMapper().writeValueAsString(savedProductDto),
-                currentTime);
-
-        // Send message to Kafka topic "new_product"
-        kafkaProducerService.send("new_product", messageContent);
-
-        return savedProductDto;
+        return this.modelMapper.map(savedProduct, ProductDto.class);
     }
+
     // Read One
     @Override
     @Cacheable(value = "PRODUCT_CACHE", key = "#productId")
@@ -71,10 +56,8 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
 
         Page<ProductDto> dtoPage = new PageImpl<>(dtoList, pageable, productPage.getTotalElements());
-        return new PagedResponseDTO<>(dtoPage); // an toàn vì đã chuẩn hóa bằng constructor như trên
+        return new PagedResponseDTO<>(dtoPage);
     }
-
-
 
     // Delete
     @Override
@@ -92,11 +75,9 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.setProductName(productDto.getProductName());
         existingProduct.setDescription(productDto.getDescription());
         existingProduct.setPrice(productDto.getPrice());
-        existingProduct.setImgLink(productDto.getImg()); // lưu link ảnh thay vì img byte
+        existingProduct.setImgLink(productDto.getImg());
 
         Product updatedProduct = this.productRepo.save(existingProduct);
-
         return this.modelMapper.map(updatedProduct, ProductDto.class);
     }
-
 }
