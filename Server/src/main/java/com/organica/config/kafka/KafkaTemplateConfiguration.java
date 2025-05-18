@@ -12,7 +12,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
+// @Configuration //
 @RequiredArgsConstructor
 public class KafkaTemplateConfiguration {
     private final KafkaProperties kafkaProperties;

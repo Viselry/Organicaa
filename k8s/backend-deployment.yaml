@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: asia-southeast2-docker.pkg.dev/sapient-duality-456306-u2/backend/backend:latest
+          image: asia-southeast1-docker.pkg.dev/notely-459605/backend-repo/backend@sha256:b51ac89796930a87d24f9344b18e90a1aacc17bad0cd0ae853163eca3c94b865
           ports:
             - containerPort: 8080
           resources:
@@ -26,17 +26,15 @@ spec:
               cpu: "500m"
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://postgres:5432/organica
+              value: jdbc:postgresql://postgres-service:5432/organica
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
             - name: SPRING_DATASOURCE_PASSWORD
               value: postgres
             - name: SPRING_DATA_REDIS_HOST
-              value: redis
+              value: redis-service
             - name: SPRING_DATA_REDIS_PORT
               value: "6379"
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              value: kafka:29092
             - name: organica.jwtSecret
               valueFrom:
                 secretKeyRef:
