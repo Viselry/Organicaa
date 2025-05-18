@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: asia-southeast1-docker.pkg.dev/notely-459605/backend-repo/backend@sha256:b18929bfaefe1b62f9e019e409729cde8fd345e85065a7d74150292870b4b2e7
+          image: asia-southeast1-docker.pkg.dev/notely-459605/backend-repo/backend@sha256:0786b44700e4506f45c437f3503b6f7e918cf8baface9c936ca859af22039daf
           ports:
             - containerPort: 8080
           resources:
