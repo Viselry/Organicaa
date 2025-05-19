@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -14,13 +14,13 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: asia-southeast1-docker.pkg.dev/notely-459605/frontend-repo/frontend:latest
+          image: asia-southeast1-docker.pkg.dev/notely-459605/frontend-repo/frontend@sha256:e86e7f2658baec473c230943b79fbfb6564f0feac53b7124b10fc463de44eece
           ports:
             - containerPort: 80
           resources:
             requests:
               memory: "64Mi"
-              cpu: "100m"
+              cpu: "50m"
             limits:
               memory: "128Mi"
               cpu: "200m"
