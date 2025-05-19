@@ -41,7 +41,7 @@ export const ProductDetails = () => {
 
   const handleCart = async () => {
     console.log(quantity);
-    const res = await fetch(`http://localhost:9090/cart/addproduct`, {
+    const res = await fetch(`http://34.59.168.90/cart/addproduct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

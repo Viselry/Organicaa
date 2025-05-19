@@ -41,7 +41,7 @@ export const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:9090/auth/signin", {
+    const res = await fetch("http://34.59.168.90/auth/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export const Login = () => {
       <a
         className="d-flex flex-row align-items-center social-login-link"
         style={{ marginBottom: 10 }}
-        href="http://localhost:9090/oauth2/authorization/google"
+        href="http://34.59.168.90/oauth2/authorization/google"
       >
         <i
           className="fa fa-google"

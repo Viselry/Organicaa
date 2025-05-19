@@ -18,7 +18,7 @@ export const Cart = () => {
       const fatchCart = async () => {
         // get cart item
         console.log(token);
-        const res = await fetch("http://localhost:9090/cart/1", {headers: {
+        const res = await fetch("http://34.59.168.90/cart/1", {headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer "+token
           },
