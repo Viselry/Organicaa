@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: asia-southeast1-docker.pkg.dev/notely-459605/backend-repo/backend@sha256:726bb7747ccbe482cd6b1d081af7d8b6201c99dd5a2e07139d45763648080b95
+          image: asia-southeast1-docker.pkg.dev/notely-459605/backend-repo/backend@sha256:8ddfaf1e1cac0bad7df4a794159fa8a73db175ab95eb173fe1842eb432d6f620
           ports:
             - containerPort: 8080
           resources:
@@ -25,6 +25,8 @@ spec:
               memory: "512Mi"
               cpu: "500m"
           env:
+            - name: SPRING_AUTOCONFIGURE_EXCLUDE
+              value: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgres-service:5432/organica
             - name: SPRING_DATASOURCE_USERNAME
@@ -49,19 +51,3 @@ spec:
               value: dummy-client-id
             - name: spring.security.oauth2.client.registration.google.client-secret
               value: dummy-client-secret
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 120
-            periodSeconds: 20
-            timeoutSeconds: 5
-            failureThreshold: 5
