@@ -24,7 +24,7 @@ const axiosFetch = async ({ url, method, data = null }) => {
 const insecureAxiosFetch = async ({ url, method, data = null }) => {
   try {
     const response = await axios.request({
-      url: "http://localhost:9090/" + url,
+      url: "http://34.59.168.90/" + url,
       method,
       data,
     });
