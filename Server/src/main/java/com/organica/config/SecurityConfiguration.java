@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,12 +41,15 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/product/").permitAll()
-                        .requestMatchers("/product/details/**").permitAll()
-                        .requestMatchers("/images/**").permitAll()
-                        .requestMatchers("/categories/get/**").permitAll()
+                        .requestMatchers(
+                                "/auth/**",
+                                "/h2-console/**",
+                                "/product/",
+                                "/product/details/**",
+                                "/images/**",
+                                "/categories/get/**",
+                                "/actuator/health" //
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
@@ -65,10 +67,8 @@ public class SecurityConfiguration {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService)
                         )
-                        .successHandler(oAuth2LoginSuccessHandler) // Gắn handler vào đây
+                        .successHandler(oAuth2LoginSuccessHandler)
                 );
-
-        ;
 
         return http.build();
     }
