@@ -6,7 +6,7 @@ import { Shop } from "../Pages/Shop";
 import { Cart } from "../Pages/Cart";
 import { CheckOut } from "../Pages/CheckOut";
 import { Login } from "../Pages/Login";
-import { Singup } from "../Pages/Singup";
+import { Signup } from "../Pages/Signup";
 import CategoryDetails from "../Pages/CategoryDetails";
 import { Protected } from "../Component/Protected";
 
@@ -30,7 +30,7 @@ export const Router = () => {
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/singup" element={<Singup />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/category/:categoryId" element={<CategoryDetails />} />
         <Route path="/checkout" element={
         <Protected isSignedIn={isSignedIn}>

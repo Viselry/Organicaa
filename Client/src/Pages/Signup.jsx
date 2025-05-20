@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Header } from "../Component/Header";
 import { toast } from 'react-toastify';
 
-export const Singup = () => {
+export const Signup = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",

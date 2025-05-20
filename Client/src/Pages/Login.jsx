@@ -180,7 +180,7 @@ export const Login = () => {
   >
     <p style={{ marginBottom: 0 }}>
       Don't you have an account?
-      <a id="register-link" href="singup">
+      <a id="register-link" href="signup">
         Sign Up!
       </a>
     </p>
