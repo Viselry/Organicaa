@@ -38,6 +38,7 @@ spec:
             - name: SPRING_DATA_REDIS_PORT
               value: "6379"
             - name: organica.jwtSecret
+              value: "mNxuCKyNqxyVP1crv3xJcXtWyp-v5HwT_LuGmrvLd8BGdE-EJ5h_qYwlTRZtpKZBtAKaJ-ZxBkpH37WI9ayk6Q-mNxuCKyNqxyVP1crv3xJcXtWyp-v5HwT_LuGmrvLd8BGdE-EJ5h_qYwlTRZtpKZBtAKaJ-ZxBkpH37WI9ayk6QmmdAAA"
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
