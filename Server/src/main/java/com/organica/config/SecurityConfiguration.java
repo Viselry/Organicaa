@@ -39,6 +39,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> {
+                    // Nếu cần config chi tiết CORS thì cấu hình ở đây
+                })
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
@@ -48,7 +51,7 @@ public class SecurityConfiguration {
                                 "/product/details/**",
                                 "/images/**",
                                 "/categories/get/**",
-                                "/actuator/health" //
+                                "/actuator/health"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
