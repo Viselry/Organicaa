@@ -25,6 +25,7 @@ public class JwtUtils {
     private long jwtExpirationMs;
 
     private SecretKey key() {
+        System.out.println(encodedSecret);
         byte[] decodedKey = Base64.getUrlDecoder().decode(encodedSecret);
         return Keys.hmacShaKeyFor(decodedKey);
     }
