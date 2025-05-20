@@ -1,22 +1,32 @@
 package com.organica.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
+
 @Configuration
-public class CorsConfig implements WebMvcConfigurer{
+public class CorsConfig {
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        // TODO Auto-generated method stub
-                registry.addMapping("/**")
-            .allowedOrigins("http://34.118.238.107", "http://34.56.70.220")
-            .allowedMethods("*")
-            .allowedHeaders("*")
-            .allowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList(
+                "http://34.118.238.107",
+                "http://34.56.70.220"
+        ));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+        config.setAllowCredentials(true);
 
-        WebMvcConfigurer.super.addCorsMappings(registry);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
     
 }
