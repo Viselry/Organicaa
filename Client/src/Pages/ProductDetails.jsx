@@ -61,7 +61,7 @@ export const ProductDetails = () => {
 
     const fatchData = async () => {
       const response = await fetch(
-        `http://localhost:9090/product/details/${id}`,
+        `http://34.59.168.90/product/details/${id}`,
         {
           headers: {
             Authorization: "Bearer " + token,

@@ -24,7 +24,7 @@ export const Items = ({ prop ,setLoading}) => {
   const updateQuantity = async (q) => {
  
     const res = await fetch(
-      `http://localhost:9090/cart/addproduct`,
+      `http://34.59.168.90/cart/addproduct`,
       {
         method: "POST",
         headers: {
@@ -67,7 +67,7 @@ export const Items = ({ prop ,setLoading}) => {
   const handleRemove = async () =>{
     //call delete api without body
     const res = await  fetch(
-      `http://localhost:9090/cart/product/${prop.products.productid}`,
+      `http://34.59.168.90/cart/product/${prop.products.productid}`,
       {
         method: "DELETE",
         headers: {
