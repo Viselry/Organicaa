@@ -66,7 +66,7 @@ export const Cart = () => {
     
             console.log("Sending purchase DTO:", purchase);
     
-            const purchaseResponse = await fetch("http://localhost:9090/purchase/", {
+            const purchaseResponse = await fetch("http://34.59.168.90/purchase/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
