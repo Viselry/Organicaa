@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Header } from "../Component/Header";
 import { toast } from 'react-toastify';
+import { Link } from "react-router-dom";
 
 export const Signup = () => {
   const [user, setUser] = useState({
@@ -106,7 +107,7 @@ export const Signup = () => {
             <a
               className="d-flex flex-row align-items-center social-login-link"
               style={{ marginBottom: 10 }}
-              href="#"
+              href="http://34.59.168.90/oauth2/authorization/google"
             >
               <i
                 className="fa fa-google"
@@ -206,9 +207,9 @@ export const Signup = () => {
         >
           <p style={{ marginBottom: 0 }}>
             Alredy have an account?
-            <a id="register-link" href="/login">
+            <Link id="register-link" to="/login">
               Sign In!
-            </a>
+            </Link>
           </p>
         </div>
       </div>

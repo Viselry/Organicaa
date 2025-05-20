@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Footer } from '../Component/Footer'
 import { Header } from '../Component/Header'
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const Login = () => {
@@ -180,9 +181,9 @@ export const Login = () => {
   >
     <p style={{ marginBottom: 0 }}>
       Don't you have an account?
-      <a id="register-link" href="/signup">
+      <Link id="register-link" to="/signup">
         Sign Up!
-      </a>
+      </Link>
     </p>
   </div>
 </div>

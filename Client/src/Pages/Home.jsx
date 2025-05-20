@@ -4,6 +4,7 @@ import { Hero } from '../Component/HomeComponent/Hero'
 import { ListProduct } from '../Component/HomeComponent/ListProduct'
 import { Footer } from '../Component/Footer'
 import { ToastContainer} from 'react-toastify';
+import { Link } from 'react-router-dom'
 
 
 
@@ -102,7 +103,7 @@ export const Home = () => {
           $215.14
         </data>
       </div>
-      <a href="./whishlist.html" className="panel-btn">
+      <a href="#" className="panel-btn">
         View Whishlist
       </a>
     </div>
@@ -162,9 +163,9 @@ export const Home = () => {
           $215.14
         </data>
       </div>
-      <a href="./cart.html" className="panel-btn">
+      <Link to="./cart" className="panel-btn">
         View Cart
-      </a>
+      </Link>
     </div>
   </aside> }
   <main>
