@@ -74,7 +74,7 @@ public class CartServiceImpl implements CartService {
             List<CartDetails> pro = new java.util.ArrayList<>();
             pro.add(cartDetails1);
 
-            newCart.setCartDetalis(pro);
+            newCart.setCartDetails(pro);
             newCart.setTotalAmount(cartDetails1.getAmount());
             cartDetails1.setCart(newCart);
 
@@ -84,7 +84,7 @@ public class CartServiceImpl implements CartService {
 
         cartDetails.setCart(cart);
 
-        List<CartDetails> list = cart.getCartDetalis();
+        List<CartDetails> list = cart.getCartDetails();
         if (list == null) {
             list = new java.util.ArrayList<>();
         }
@@ -110,7 +110,7 @@ public class CartServiceImpl implements CartService {
             list.add(cartDetails);
         }
 
-        cart.setCartDetalis(list);
+        cart.setCartDetails(list);
         cart.setTotalAmount(totalAmount.get());
 
         Cart savedCart = this.cartRepo.save(cart);

@@ -27,7 +27,7 @@ public class Cart {
     private float totalAmount;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    private List<CartDetails> cartDetalis = new ArrayList<>();
+    private List<CartDetails> cartDetails = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -53,13 +53,13 @@ public class Cart {
         this.totalAmount = totalAmount;
     }
 
-    public List<CartDetails> getCartDetalis() {
-        return cartDetalis;
+    public List<CartDetails> getCartDetails() {
+        return this.cartDetails;
     }
 
-    public void setCartDetalis(List<CartDetails> cartDetalis) {
-        this.cartDetalis = cartDetalis;
-        for (CartDetails detail : cartDetalis) {
+    public void setCartDetails(List<CartDetails> cartDetails) {
+        this.cartDetails = cartDetails;
+        for (CartDetails detail : cartDetails) {
             detail.setCart(this); // đảm bảo ánh xạ 2 chiều đúng
         }
     }
