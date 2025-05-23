@@ -40,7 +40,7 @@ export const Signup = () => {
     window.location.href = "/login";
     e.preventDefault();
     if (user.password === user.confirmPassword) {
-      const res = await fetch("http://34.59.168.90/auth/singup", {
+      const res = await fetch("http://34.27.174.177/auth/singup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export const Signup = () => {
             <a
               className="d-flex flex-row align-items-center social-login-link"
               style={{ marginBottom: 10 }}
-              href="http://34.59.168.90/oauth2/authorization/google"
+              href="http://34.27.174.177/oauth2/authorization/google"
             >
               <i
                 className="fa fa-google"

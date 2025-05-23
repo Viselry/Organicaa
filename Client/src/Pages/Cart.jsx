@@ -18,7 +18,7 @@ export const Cart = () => {
       const fatchCart = async () => {
         // get cart item
         console.log(token);
-        const res = await fetch("http://34.59.168.90/cart/1", {headers: {
+        const res = await fetch("http://34.27.174.177/cart/1", {headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer "+token
           },
@@ -66,7 +66,7 @@ export const Cart = () => {
     
             console.log("Sending purchase DTO:", purchase);
     
-            const purchaseResponse = await fetch("http://34.59.168.90/purchase/", {
+            const purchaseResponse = await fetch("http://34.27.174.177/purchase/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
