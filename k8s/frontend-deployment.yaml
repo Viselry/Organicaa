@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: asia-southeast1-docker.pkg.dev/notely-459605/frontend-repo/frontend@sha256:e86e7f2658baec473c230943b79fbfb6564f0feac53b7124b10fc463de44eece
+          image: asia-southeast1-docker.pkg.dev/notely-459605/frontend-repo/frontend@sha256:734eb388e7ef1a0787614f6952a5c29cfe54a2a5101140a9bdab96f7e0412dbc
           ports:
             - containerPort: 80
           resources:
