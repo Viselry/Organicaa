@@ -25,7 +25,7 @@ export const Cart = () => {
         });
         const data = await res.json();
         setTotalAmount(data.totalAmount);
-        setItem(data.cartDetalis);
+        setItem(data.cartDetails);
       };
 
       useEffect(() => {
