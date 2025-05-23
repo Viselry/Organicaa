@@ -67,7 +67,9 @@ public class ApiSecurityConfig {
 
         config.setAllowedOrigins(Arrays.asList(
                 "http://34.118.238.107",
-                "http://34.56.70.220"
+                "http://34.56.70.220",
+                "http://35.239.146.246",
+                "34.118.237.110"
         ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));

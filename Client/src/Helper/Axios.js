@@ -8,7 +8,7 @@ const axiosFetch = async ({ url, method, data = null }) => {
     const token = sessionStorage.getItem("token") ?? "{}";
     console.log(token);
     const response = await axios.request({
-      url: "http://35.239.146.246/" + url,
+      url: "http://34.27.174.177/" + url,
       method,
       data: data,
       headers: {
@@ -24,7 +24,7 @@ const axiosFetch = async ({ url, method, data = null }) => {
 const insecureAxiosFetch = async ({ url, method, data = null }) => {
   try {
     const response = await axios.request({
-      url: "http://35.239.146.246/" + url,
+      url: "http://34.27.174.177/" + url,
       method,
       data,
     });
