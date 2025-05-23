@@ -18,5 +18,5 @@ public class CartDto {
 
     private float TotalAmount;
 
-    private List<CartDetailDto> cartDetalis;
+    private List<CartDetailDto> cartDetails;
 }

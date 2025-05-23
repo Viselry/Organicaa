@@ -34,6 +34,7 @@ export const Items = ({ prop ,setLoading}) => {
         body: JSON.stringify({
           productId: prop.products.productid,
           quantity: q,
+          userEmail: sessionStorage.getItem("email"),
         }),
       }
 
