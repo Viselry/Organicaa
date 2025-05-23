@@ -22,7 +22,6 @@ export const Items = ({ prop ,setLoading}) => {
   }
   // console.log(quantity);
   const updateQuantity = async (q) => {
- 
     const res = await fetch(
       `http://34.27.174.177/cart/addproduct`,
       {
@@ -32,7 +31,7 @@ export const Items = ({ prop ,setLoading}) => {
           "Authorization": "Bearer "+token
         },
         body: JSON.stringify({
-          productId: prop.products.productid,
+          productId: prop.products.productId,
           quantity: q,
           userEmail: sessionStorage.getItem("email"),
         }),
@@ -68,7 +67,7 @@ export const Items = ({ prop ,setLoading}) => {
   const handleRemove = async () =>{
     //call delete api without body
     const res = await  fetch(
-      `http://34.27.174.177/cart/product/${prop.products.productid}`,
+      `http://34.27.174.177/cart/product/${prop.products.productId}`,
       {
         method: "DELETE",
         headers: {
