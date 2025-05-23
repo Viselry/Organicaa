@@ -7,17 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @ToString
-public class CartDetalis {
+public class CartDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int CartDetalisId;
+    private int CartDetailsId;
 
     @ManyToOne
     private Product products;

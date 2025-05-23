@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 public class CartDetailDto {
 
-    private int CartDetalisId;
+    private int CartDetailsId;
     private ProductDto products;
     private int Quantity;
     private int Amount;

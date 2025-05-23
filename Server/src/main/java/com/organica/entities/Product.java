@@ -31,7 +31,7 @@ public class Product {
     )
     private List<Category> categoryList;
     @OneToMany(mappedBy = "products")
-    private List<CartDetalis> list;
+    private List<CartDetails> list;
     @OneToMany(mappedBy = "product")
     private List<PurchaseDetails> purchaseDetails; ;
 

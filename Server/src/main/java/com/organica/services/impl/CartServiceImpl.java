@@ -1,7 +1,7 @@
 package com.organica.services.impl;
 
 import com.organica.entities.Cart;
-import com.organica.entities.CartDetalis;
+import com.organica.entities.CartDetails;
 import com.organica.entities.Product;
 import com.organica.entities.User;
 import com.organica.payload.*;
@@ -55,10 +55,10 @@ public class CartServiceImpl implements CartService {
         Product product = this.productRepo.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
 
-        CartDetalis cartDetalis = new CartDetalis();
-        cartDetalis.setProducts(product);
-        cartDetalis.setQuantity(quantity);
-        cartDetalis.setAmount((int) (product.getPrice() * quantity));
+        CartDetails cartDetails = new CartDetails();
+        cartDetails.setProducts(product);
+        cartDetails.setQuantity(quantity);
+        cartDetails.setAmount((int) (product.getPrice() * quantity));
 
         Cart cart = user.getCart();
 
@@ -66,32 +66,32 @@ public class CartServiceImpl implements CartService {
             Cart newCart = new Cart();
             newCart.setUser(user);
 
-            CartDetalis cartDetalis1 = new CartDetalis();
-            cartDetalis1.setQuantity(quantity);
-            cartDetalis1.setProducts(product);
-            cartDetalis1.setAmount((int) (product.getPrice() * quantity));
+            CartDetails cartDetails1 = new CartDetails();
+            cartDetails1.setQuantity(quantity);
+            cartDetails1.setProducts(product);
+            cartDetails1.setAmount((int) (product.getPrice() * quantity));
 
-            List<CartDetalis> pro = new java.util.ArrayList<>();
-            pro.add(cartDetalis1);
+            List<CartDetails> pro = new java.util.ArrayList<>();
+            pro.add(cartDetails1);
 
             newCart.setCartDetalis(pro);
-            newCart.setTotalAmount(cartDetalis1.getAmount());
-            cartDetalis1.setCart(newCart);
+            newCart.setTotalAmount(cartDetails1.getAmount());
+            cartDetails1.setCart(newCart);
 
             Cart savedCart = this.cartRepo.save(newCart);
             return this.modelMapper.map(savedCart, CartDto.class);
         }
 
-        cartDetalis.setCart(cart);
+        cartDetails.setCart(cart);
 
-        List<CartDetalis> list = cart.getCartDetalis();
+        List<CartDetails> list = cart.getCartDetalis();
         if (list == null) {
             list = new java.util.ArrayList<>();
         }
 
         AtomicReference<Boolean> flag = new AtomicReference<>(false);
 
-        List<CartDetalis> updatedProducts = list.stream().map((i) -> {
+        List<CartDetails> updatedProducts = list.stream().map((i) -> {
             if (i.getProducts().getProductId() == productId) {
                 i.setQuantity(quantity);
                 i.setAmount((int) (i.getQuantity() * product.getPrice()));
@@ -105,9 +105,9 @@ public class CartServiceImpl implements CartService {
             list.clear();
             list.addAll(updatedProducts);
         } else {
-            cartDetalis.setCart(cart);
+            cartDetails.setCart(cart);
             totalAmount.set(totalAmount.get() + (int) (quantity * product.getPrice()));
-            list.add(cartDetalis);
+            list.add(cartDetails);
         }
 
         cart.setCartDetalis(list);
@@ -135,7 +135,7 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
 
         Cart cart = this.cartRepo.findByUser(user);
-        CartDetalis cartDetail = this.cartDetailsRepo.findByProductsAndCart(product, cart);
+        CartDetails cartDetail = this.cartDetailsRepo.findByProductsAndCart(product, cart);
         int amount = cartDetail.getAmount();
 
         cart.setTotalAmount(cart.getTotalAmount() - amount);
